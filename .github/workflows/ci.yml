@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Run build-archiver
-        uses: UltimateHackingKeyboard/build-archiver@v0.0.8
+        uses: UltimateHackingKeyboard/build-archiver@master
         with:
           FILE_PATTERN: "data/*.txt"
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
