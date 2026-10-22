@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+      - build_refs_test
+    tags:
+      - '*'
   pull_request:
     branches:
       - master
@@ -16,10 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Name the file per run
+        run: |
+          mkdir out
+          cp data/a.txt out/a-${{ github.run_id }}.txt
+
       - name: Run build-archiver
-        uses: UltimateHackingKeyboard/build-archiver@master
+        uses: kareltucek/build-archiver@build_refs
         with:
-          FILE_PATTERN: "data/*.txt"
+          FILE_PATTERN: "out/*.txt"
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           S3_ACCESS_KEY: ${{ secrets.UHK_BUILD_ARCHIVER_B2_ACCESS_SECRET }}
           S3_ACCESS_KEY_ID: ${{ secrets.UHK_BUILD_ARCHIVER_B2_ACCESS_KEY }}
